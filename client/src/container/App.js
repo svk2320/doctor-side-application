@@ -14,11 +14,12 @@ const App = () => {
     <Container maxWidth="xl">
       {/* <Navbar /> */}
       <Switch>
-        <Route path="/" exact component={() => <Redirect to="/posts" />} />
+        {/* <Route path="/" exact component={() => <Redirect to="/posts" />} /> */}
         <Route path="/posts" exact component={Home} />
         <Route path="/posts/search" exact component={Home} />
         <Route path="/posts/:post_id" exact component={PostDetails} />
-        <Route path="/auth" exact component={(user) => (user ? <Auth /> : <Redirect to="/posts" />)} />
+        {/* <Route path="/auth" exact component={(user) => (user ? <Auth /> : <Redirect to="/posts" />)} /> */}
+        <Route path="/" exact component={<Auth />} />
       </Switch>
     </Container>
   );
