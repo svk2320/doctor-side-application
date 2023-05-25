@@ -1,20 +1,32 @@
 import React, { useState } from "react";
-import { Avatar, Paper, Grid, Typography, Container, Button } from "@material-ui/core";
+import {
+  Avatar,
+  Paper,
+  Grid,
+  Typography,
+  Container,
+  Button,
+} from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
-import { signin, signup } from "../../store/authentication/authentication.action";
+import {
+  signin,
+  signup,
+} from "../../store/authentication/authentication.action";
 import AUTH_ACTION_TYPES from "../../store/authentication/authentication.types";
-import { signInWithGooglePopup } from "../../services/firebase/firebase.services";
 import FormInput from "../../components/form-input/form-input";
 import Icon from "../../assets/icon";
 
 import useStyles from "./authentication.styles";
 
 const INITIAL_STATE = {
-  firstName: "",
-  lastName: "",
+  name: "",
+  age: "",
+  gender: "",
+  Phone: "",
   email: "",
   password: "",
   confirmPassword: "",
@@ -38,6 +50,8 @@ const Auth = () => {
     }
   };
 
+  const [selectedOption, setSelectedOption] = useState('');
+
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -45,17 +59,6 @@ const Auth = () => {
   const switchMode = () => {
     setIsSignUp((prevShowPassword) => !prevShowPassword);
     setShowPassword(false);
-  };
-
-  const signInWithGoogle = async () => {
-    try {
-      const { user } = await signInWithGooglePopup();
-
-      dispatch({ type: AUTH_ACTION_TYPES.AUTH, payload: user });
-      history.push("/");
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleShowPassword = () =>
@@ -71,21 +74,39 @@ const Auth = () => {
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
             {isSignUp && (
-              <>
                 <FormInput
                   name="firstName"
                   label="First Name"
                   handleChange={handleChange}
                   autoFocus
-                  half
                 />
-                <FormInput
-                  name="lastName"
-                  label="Last Name"
-                  handleChange={handleChange}
-                  autoFocus
-                  half
-                />
+            )}
+            {isSignUp && (
+              <>
+              <FormInput
+              name="Age"
+              label="Age"
+              handleChange={handleChange}
+              type="number"
+              />
+              <InputLabel id="select-label" style={{ margin: "10px", paddingRight: "10px" }}>Select Gender *</InputLabel>
+              <Select
+                name="gender"
+                labelId="select-label"
+                id="simple-select"
+                style={{padding: "0 10px 0 10px"}}
+                onChange={handleChange}
+              >
+                <MenuItem value="Male" style={{padding: "0 10px 0 10px"}}>Male</MenuItem>
+                <MenuItem value="Female" style={{padding: "0 10px 0 10px"}}>Female</MenuItem>
+                <MenuItem value="Non-binary" style={{padding: "0 10px 0 10px"}}>Non-binary</MenuItem>
+              </Select>
+              <FormInput
+                name="Phone"
+                label="Phone Number"
+                handleChange={handleChange}
+                type="text"
+              />
               </>
             )}
             <FormInput
@@ -119,16 +140,6 @@ const Auth = () => {
           >
             {isSignUp ? "Sign Up" : "Sign In"}
           </Button>
-          <Button
-            className={classes.googleButton}
-            color="primary"
-            fullWidth
-            onClick={signInWithGoogle}
-            startIcon={<Icon />}
-            variant="contained"
-          >
-            Google Sign In
-          </Button>
           <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
@@ -145,5 +156,3 @@ const Auth = () => {
 };
 
 export default Auth;
-
-// rafce
