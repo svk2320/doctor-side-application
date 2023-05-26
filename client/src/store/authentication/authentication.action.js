@@ -19,7 +19,7 @@ export const signup = (formData, history) => async (dispatch) => {
 
     dispatch({ type: AUTH_ACTION_TYPES.AUTH, payload: data });
 
-    history.push("/");
+    history.push("/pro-details");
   } catch (error) {
     console.log(error);
   }

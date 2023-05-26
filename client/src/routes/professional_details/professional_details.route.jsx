@@ -7,7 +7,8 @@ import {
   Container,
   Button,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import LocalHospitalOutlined from '@material-ui/icons/LocalHospitalOutlined';
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
@@ -20,11 +21,11 @@ import AUTH_ACTION_TYPES from "../../store/authentication/authentication.types";
 import FormInput from "../../components/form-input/form-input";
 import Icon from "../../assets/icon";
 
-import useStyles from "./authentication.styles";
+import useStyles from "./professional_details.styles";
 
 const INITIAL_STATE = {
-  name: "",
-  age: "",
+  designation: "",
+  hospitalOrClinic: "",
   gender: "",
   Phone: "",
   email: "",
@@ -32,7 +33,7 @@ const INITIAL_STATE = {
   confirmPassword: "",
 };
 
-const Auth = () => {
+const ProDetails = () => {
   const classes = useStyles();
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
@@ -45,7 +46,7 @@ const Auth = () => {
 
     if (isSignUp) {
       dispatch(signup(formData, history));
-
+      history.push("/home");
     } else {
       dispatch(signin(formData, history));
     }
@@ -69,19 +70,47 @@ const Auth = () => {
     <Container component="main" maxWidth="xs">
       <Paper className={classes.paper} elevation={3}>
         <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
+          <LocalHospitalOutlined />
         </Avatar>
-        <Typography variant="h5">{isSignUp ? "Sign Up" : "Sign In"}</Typography>
+        <Typography variant="h5">{"Professional details"}</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {isSignUp && (
-                <FormInput
-                  name="Name"
-                  label="Name"
-                  handleChange={handleChange}
-                  autoFocus
-                />
-            )}
+            <FormInput
+                name="designation"
+                label="Designation"
+                handleChange={handleChange}
+                autoFocus
+            />
+            <FormInput
+                name="hospitalOrClinic"
+                label="Hospital/Clinic"
+                handleChange={handleChange}
+                autoFocus
+            />
+            <FormInput
+                name="city"
+                label="City"
+                handleChange={handleChange}
+                autoFocus
+            />
+            <FormInput
+                name="state"
+                label="State"
+                handleChange={handleChange}
+                autoFocus
+            />
+            <FormInput
+                name="state"
+                label="Years of Experience"
+                handleChange={handleChange}
+                autoFocus
+            />
+            <FormInput
+                name="highestQualification"
+                label="Highest Qualification"
+                handleChange={handleChange}
+                autoFocus
+            />
             {isSignUp && (
               <>
               <FormInput
@@ -110,27 +139,6 @@ const Auth = () => {
               />
               </>
             )}
-            <FormInput
-              name="email"
-              label="Email Address"
-              handleChange={handleChange}
-              type="email"
-            />
-            <FormInput
-              name="password"
-              label="Password"
-              handleChange={handleChange}
-              type={showPassword ? "text" : "password"}
-              handleShowPassword={handleShowPassword}
-            />
-            {isSignUp && (
-              <FormInput
-                name="confirmPassword"
-                label="Confirm Password"
-                handleChange={handleChange}
-                type="password"
-              />
-            )}
           </Grid>
           <Button
             type="submit"
@@ -139,9 +147,9 @@ const Auth = () => {
             className={classes.submit}
             fullWidth
           >
-            {isSignUp ? "Sign Up" : "Sign In"}
+            {"Submit"}
           </Button>
-          <Grid container justifyContent="flex-end">
+          {/* <Grid container justifyContent="flex-end">
             <Grid item>
               <Button onClick={switchMode}>
                 {isSignUp
@@ -149,11 +157,11 @@ const Auth = () => {
                   : "Don't have an account? Sign Up"}
               </Button>
             </Grid>
-          </Grid>
+          </Grid> */}
         </form>
       </Paper>
     </Container>
   );
 };
 
-export default Auth;
+export default ProDetails;
