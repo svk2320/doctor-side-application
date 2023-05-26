@@ -7,6 +7,8 @@ import Home from "../routes/home-test/home.route";
 import Auth from "../routes/authentication/authentication.route";
 import ProDetails from "../routes/professional_details/professional_details.route";
 import PostDetails from "../components/post-details/post-details.component";
+import PatientDetails from "../routes/patient_details/patient_details.route";
+import PatientDetails02 from "../routes/patient_details_02/patient_details_02.route";
 
 const App = () => {
   const user = JSON.parse(localStorage.getItem("profile"));
@@ -21,6 +23,8 @@ const App = () => {
         <Route path="/posts/:post_id" exact component={PostDetails} /> */}
         <Route path="/auth" exact component={(user) => (user ? <Auth /> : <Redirect to="/posts" />)} />
         <Route path="/pro-details" exact component={ProDetails} />
+        <Route path="/patient-details" exact component={PatientDetails} />
+        <Route path="/patient-details-02" exact component={PatientDetails02} />
         <Route path="/home" exact component={Home} />
       </Switch>
     </Container>
